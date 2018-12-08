@@ -6,15 +6,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="netgames"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ClassesCompartilhadas"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteInterfacePadrao"/>
 	<classpathentry kind="src" path="HivePlayerInterface"/>
 	<classpathentry kind="src" path="HivePlayerProxy"/>
 	<classpathentry kind="src" path="HivePlayer"/>
-	<classpathentry kind="lib" path="/ClassesCompartilhadas/bin/NetGamesFileOffline.jar"/>
-	<classpathentry kind="lib" path="/ClassesCompartilhadas/bin/servidor.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameLogic"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameManager"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameProxy"/>
+	<classpathentry kind="lib" path="netgames/jogoMultiPlayer.properties"/>
+	<classpathentry kind="lib" path="netgames/ngnrtFramework.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

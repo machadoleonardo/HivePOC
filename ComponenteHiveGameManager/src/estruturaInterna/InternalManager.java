@@ -313,8 +313,7 @@ public class InternalManager {
 	 * @param port
 	 */
 	public void addProxyPort(PortManagerProxy port) {
-		// TODO - implement InternalManager.addProxyPort
-		throw new UnsupportedOperationException();
+		proxyPorts.add(port);
 	}
 
 	/**
