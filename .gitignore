@@ -1,0 +1,42 @@
+
+\.metadata/
+
+\.recommenders/
+
+hive_POC/
+
+hive_POC_refector/
+
+hive_vF/
+
+RemoteSystemsTempFiles/
+
+Tic Tac Toe Aplication/
+
+Tic Tac Toe Common References/
+
+TIc Tac Toe Componente Based Player Node/
+
+TIc Tac Toe Componente Based Server Node/
+
+Component Interface Pattern/
+
+ClassesCompartilhadas/\.settings/
+
+ClassesCompartilhadas/bin/
+
+ComponenteHiveGameLogic/bin/
+
+ComponenteHiveGameManager/bin/
+
+ComponenteHiveGameProxy/bin/
+
+ComponenteHiveGameProxy/\.settings/
+
+ComponenteHiveInterfacePlayer/\.settings/
+
+ComponenteHiveInterfacePlayer/bin/
+
+ComponenteInterfacePadrao/\.settings/
+
+ComponenteInterfacePadrao/bin/
