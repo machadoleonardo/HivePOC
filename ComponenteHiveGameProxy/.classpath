@@ -6,12 +6,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="netgames"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ClassesCompartilhadas"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteInterfacePadrao"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameManager"/>
-	<classpathentry kind="lib" path="/ClassesCompartilhadas/bin/NetGamesFileOffline.jar"/>
-	<classpathentry kind="lib" path="/ClassesCompartilhadas/bin/servidor.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameLogic"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveInterfacePlayer"/>
+	<classpathentry kind="lib" path="netgames/ngnrtFramework.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

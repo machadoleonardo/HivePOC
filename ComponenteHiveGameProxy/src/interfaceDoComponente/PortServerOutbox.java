@@ -4,7 +4,6 @@ import java.util.List;
 
 import InterfacesComuns.InterfaceNetgamesManager;
 import InterfacesComuns.Throw;
-import cip.NonComponentPortOutbox;
 import br.ufsc.inf.leobr.cliente.Jogada;
 import br.ufsc.inf.leobr.cliente.Proxy;
 import br.ufsc.inf.leobr.cliente.exception.ArquivoMultiplayerException;
@@ -12,6 +11,8 @@ import br.ufsc.inf.leobr.cliente.exception.JahConectadoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoConectadoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoJogandoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoPossivelConectarException;
+import cip.NonComponentPortOutbox;
+
 
 public class PortServerOutbox extends NonComponentPortOutbox implements InterfaceNetgamesManager {
 	

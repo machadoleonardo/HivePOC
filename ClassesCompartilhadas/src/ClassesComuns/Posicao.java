@@ -29,10 +29,8 @@ public class Posicao
 	final static Color COLOURTWO = new Color(0,0,0,200);
 	final static Color COLOURTWOTXT = new Color(255,100,255);
 	
-	protected Gerenciador umGerenciador;
 	
-	public Posicao(Gerenciador umGerenciador) {
-		this.umGerenciador = umGerenciador;
+	public Posicao() {
 		
 	}
 	
@@ -136,7 +134,7 @@ The hexagon is drawn in the colour specified in hexgame.COLOURELL.
 		int x = i * (s+t);
 		int y = j * h + (i%2) * h/2;
 		
-		if(n.contains(umGerenciador.getJogador1().getApelido())) {
+		if(n.contains("Teste")) {
 			g2.setColor(COLOURCELL);
 			g2.fillPolygon(hex(x,y));
 			g2.setColor(COLOURGRID);

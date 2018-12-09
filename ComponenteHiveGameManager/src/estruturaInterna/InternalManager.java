@@ -118,7 +118,7 @@ public class InternalManager {
 		PortManagerProxy port = this.getProxyPort(portId);
 		CommunicationContainer notification = new CommunicationContainer();
 		notification.setKind(CommunicationKind.disconnectionNotification);
-		notification.setContent("Disconnected from TTT Server");
+		notification.setContent("Desconectado do servidor Hive");
 		PortManagerProxyOutbox outbox = (PortManagerProxyOutbox) port.getOutbox();
 		outbox.comunicar(notification);
 		Jogador player = port.getPlayer();
@@ -313,8 +313,7 @@ public class InternalManager {
 	 * @param port
 	 */
 	public void addProxyPort(PortManagerProxy port) {
-		// TODO - implement InternalManager.addProxyPort
-		throw new UnsupportedOperationException();
+		proxyPorts.add(port);
 	}
 
 	/**
@@ -325,14 +324,13 @@ public class InternalManager {
 		logicPort = port;
 	}
 
-	public boolean iniciaarServidor() {
+	public boolean iniciarServidor() {
 		PortManagerProxyOutbox anOutbox = (PortManagerProxyOutbox) proxyPorts.get(0).getOutbox();
 		boolean result = anOutbox.conectar("proxy1");
 		return result;
 	}
 
 	public void conectar(String portId, String arg0) {
-		// register a new player
 		Jogador player = new Jogador(1);
 		String playerId;
 		if (arg0.isEmpty()) {
@@ -349,11 +347,9 @@ public class InternalManager {
 		firstProxy.setPlayer(player);
 		PortManagerProxyOutbox firstOutbox = (PortManagerProxyOutbox) firstProxy.getOutbox();
 		firstOutbox.comunicar(notification);
-		// new component TTTManagerProxy
 		HiveManagerProxy newHiveManagerProxy = new HiveManagerProxy("HiveManagerProxy");
 		newHiveManagerProxy.initialize();
 		PortManager2 otherComponentPort = (PortManager2) newHiveManagerProxy.getPort("manager");
-		// conect to new component to wait for the next player
 		String newPortName = this.getPortManagerId();
 		PortManagerProxy newProxy = new PortManagerProxy(newPortName);
 		newProxy.initialize();
