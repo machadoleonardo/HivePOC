@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import ClassesComuns.Colmeia;
 import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
+import ClassesComuns.Peca;
 import ClassesComuns.State;
 import InterfacesComuns.InterfacePlayerProxy;
 import interfaceDoComponente.PortPlayerProxy;
@@ -66,13 +67,9 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 	protected JButton bBesouro0;
 	protected JButton bBesouro1;
 	protected JPanel armazemDePecas;
-
-	protected enum PlayerStateValue {
-		disconnected, connected, playing
-	}
-
 	protected PlayerStateValue playerState = PlayerStateValue.disconnected;
-	private boolean enabledAction = false;
+	protected boolean ehMinhaVez = false;
+	protected boolean partidaEmAndamento = false;
 
 	public HiveGUI() throws HeadlessException {
 		super();
@@ -235,20 +232,20 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		if (playerState == PlayerStateValue.connected) {
 			playerState = PlayerStateValue.playing;
 			if (stateMessage.contains(nome)) {
-				enabledAction  = true;
+				ehMinhaVez  = true;
 			} else {
-				enabledAction = false;
+				ehMinhaVez = false;
 			}
 		}
 		if ((playerState == PlayerStateValue.playing) &&
 			((stateMessage.contains("gave up")) || (stateMessage.contains("Game ended")) || (stateMessage.contains("Winner:"))))	{
 			playerState = PlayerStateValue.connected;
-			enabledAction = false;
+			ehMinhaVez = false;
 		} else {
 			if (stateMessage.contains(nome)) {
-				enabledAction = true;
+				ehMinhaVez = true;
 			} else {
-				enabledAction = false;
+				ehMinhaVez = false;
 			}
 		}
 		// INTERFACE UPDATE
@@ -447,11 +444,6 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		
 	}
 
-	public void executarLance(int x, int y, int origX, int origY, int nroPeca) {
-//		String notif = this.umGerenciador.executarLance(x, y, origX, origY, nroPeca);
-
-//		JOptionPane.showMessageDialog(null, notif);
-	}
-
+	
 
 }

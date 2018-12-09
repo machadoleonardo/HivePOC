@@ -176,10 +176,10 @@ public class Gerenciador implements Jogada {
 	
 	public String executarLance(int x, int y, int origX, int origY, int nroPeca) {
 		String notif = "";
-		if( this.partidaEmAndamento ) {
-			
-			if(rede.getEhMinhaVez()){
-				
+		if (this.partidaEmAndamento) {
+
+			if (rede.getEhMinhaVez()) {
+
 				int rodadaAtual = this.getRodada();
 				String corOp = this.getCorOponente();
 				Colmeia minhaColmeia = this.getColmeia();
@@ -190,71 +190,125 @@ public class Gerenciador implements Jogada {
 				boolean temPecaVizinha = minhaColmeia.temPecaVizinha(x, y);
 				boolean temPecaVizinhaOutroTime = minhaColmeia.temPecaVizinhaOutroTime(x, y, corOp);
 				int nroPecaDestino = posicaoDestino.getNroPeca();
-				
-				if(rodadaAtual==0) { //primeira rodada de cada jogador
-					if(nroPeca==12) {notif="Voce nao pode selecionar peca do adversario"; return notif;}
-					if(nroPecaDestino != -1) { notif = "Posicao ocupada."; return notif;}
-					if( ! colmeiaVazia && ! temPecaVizinha ){ notif = "Colmeia desconectada."; return notif;}
-							
-							Peca p = this.jogadorDaVez().getPecas(nroPeca);
-							minhaColmeia.setPeca(x, y, p);
-							String tipo = p.getTipo()+" "+this.getAtorJogador().getNome();
-							this.getAtorJogador().modificaGrafico(x, y, tipo);
-							rede.enviarJogada(x, y, p.getTipo()+" "+this.getAtorJogador().getNome(), nroPeca);
-							p.setEmJogo(true);
-							}
-				
-				
-				else { //rodada > 0
-						
-					if(nroPeca == 12 && rodadaAtual<4 && ! temAbelha) {notif = "nao pode mover enquanto nao inserir a abelha"; return notif;}
-					if(nroPeca !=0 && rodadaAtual==3 && ! temAbelha) {notif="insira a abelha"; return notif;}
-														
-				if(nroPeca != 12) { // eh uma insercao
-											
-					if(this.jogadorDaVez().getPecas(nroPeca).isEmJogo()) {notif="Peca em jogo."; return notif;} 
-					if(this.getColmeia().getPeca(x, y).getNroPeca()!= -1) { notif = "Posicao ocupada."; return notif;} 
-					if(! minhaColmeia.colmeiaVazia() && ! minhaColmeia.temPecaVizinha(x,y)){ notif = "Colmeia desconectada."; return notif;}
-					if( temPecaVizinhaOutroTime) {notif = "Na insercao nao pode tocar na peca do adversario"; return notif;}
-																	
+
+				if (rodadaAtual == 0) { // primeira rodada de cada jogador
+					if (nroPeca == 12) {
+						notif = "Voce nao pode selecionar peca do adversario";
+						return notif;
+					}
+					if (nroPecaDestino != -1) {
+						notif = "Posicao ocupada.";
+						return notif;
+					}
+					if (!colmeiaVazia && !temPecaVizinha) {
+						notif = "Colmeia desconectada.";
+						return notif;
+					}
+
+					Peca p = this.jogadorDaVez().getPecas(nroPeca);
+					minhaColmeia.setPeca(x, y, p);
+					String tipo = p.getTipo() + " " + this.getAtorJogador().getNome();
+					this.getAtorJogador().modificaGrafico(x, y, tipo);
+					rede.enviarJogada(x, y, p.getTipo() + " " + this.getAtorJogador().getNome(), nroPeca);
+					p.setEmJogo(true);
+				}
+
+				else { // rodada > 0
+
+					if (nroPeca == 12 && rodadaAtual < 4 && !temAbelha) {
+						notif = "nao pode mover enquanto nao inserir a abelha";
+						return notif;
+					}
+					if (nroPeca != 0 && rodadaAtual == 3 && !temAbelha) {
+						notif = "insira a abelha";
+						return notif;
+					}
+
+					if (nroPeca != 12) { // eh uma insercao
+
+						if (this.jogadorDaVez().getPecas(nroPeca).isEmJogo()) {
+							notif = "Peca em jogo.";
+							return notif;
+						}
+						if (this.getColmeia().getPeca(x, y).getNroPeca() != -1) {
+							notif = "Posicao ocupada.";
+							return notif;
+						}
+						if (!minhaColmeia.colmeiaVazia() && !minhaColmeia.temPecaVizinha(x, y)) {
+							notif = "Colmeia desconectada.";
+							return notif;
+						}
+						if (temPecaVizinhaOutroTime) {
+							notif = "Na insercao nao pode tocar na peca do adversario";
+							return notif;
+						}
+
 						Peca p = this.jogadorDaVez().getPecas(nroPeca);
 						minhaColmeia.setPeca(x, y, p);
-						this.getAtorJogador().modificaGrafico(x, y, p.getTipo()+" "+this.getAtorJogador().getNome());
-						rede.enviarJogada(x, y, p.getTipo()+" "+this.getAtorJogador().getNome(), nroPeca);
+						this.getAtorJogador().modificaGrafico(x, y,
+								p.getTipo() + " " + this.getAtorJogador().getNome());
+						rede.enviarJogada(x, y, p.getTipo() + " " + this.getAtorJogador().getNome(), nroPeca);
 						this.jogadorDaVez().getPecas(nroPeca).setEmJogo(true);
-											
+
 					} else {
-											
-				if(nroPeca==12) { // eh uma movimentacao
-												
-					if(! posicaoOrigem.getCor().equals(this.jogadorDaVez().getCor())) {notif = "Nao pode mover peca do adversario"; return notif;}
-												
-					if(posicaoDestino.getNroPeca()!= -1) { notif = "Posicao ocupada."; return notif;}
-														
-					if(! colmeiaVazia && ! temPecaVizinha ){ notif = "Colmeia desconectada."; return notif;}
-	
-					if(! minhaColmeia.verificaDistancia(posicaoOrigem, x, y, origX, origY)) {notif = "Passos alem do permitido."; return notif;}
-																
-						this.getColmeia().setPeca(x, y, posicaoOrigem);
-						this.getColmeia().limpaPosicao(origX, origY);
-						Peca p = new Peca();
-						this.getAtorJogador().modificaGrafico(x, y, posicaoOrigem.getTipo()+" "+this.getAtorJogador().getNome());
-						this.getAtorJogador().modificaGrafico(origX, origY, p.getTipo());
-						rede.enviarJogadaBuffer(origX, origY, p.getTipo(), p.getNroPeca());
-						rede.enviarJogada(x, y, posicaoOrigem.getTipo()+" "+this.getAtorJogador().getNome(), posicaoOrigem.getNroPeca());
-		}}}
-			
-			notif="Jogada realizada com sucesso";
-			if(minhaColmeia.abelhaCercada(corOp)){notif="Abelha cercada. Voce ganhou o jogo."; return notif;}
-				if(minhaColmeia.abelhaPropriaCercada(corOp)){notif="Abelha cercada. Voce perdeu o jogo."; return notif;}
-			this.rodada++;
-			this.atualizaVez();}
-						
-							
-			else {notif = "aguarde sua vez";}}
-		
-		else {notif = "nao conectado";}
-		
+
+						if (nroPeca == 12) { // eh uma movimentacao
+
+							if (!posicaoOrigem.getCor().equals(this.jogadorDaVez().getCor())) {
+								notif = "Nao pode mover peca do adversario";
+								return notif;
+							}
+
+							if (posicaoDestino.getNroPeca() != -1) {
+								notif = "Posicao ocupada.";
+								return notif;
+							}
+
+							if (!colmeiaVazia && !temPecaVizinha) {
+								notif = "Colmeia desconectada.";
+								return notif;
+							}
+
+							if (!minhaColmeia.verificaDistancia(posicaoOrigem, x, y, origX, origY)) {
+								notif = "Passos alem do permitido.";
+								return notif;
+							}
+
+							this.getColmeia().setPeca(x, y, posicaoOrigem);
+							this.getColmeia().limpaPosicao(origX, origY);
+							Peca p = new Peca();
+							this.getAtorJogador().modificaGrafico(x, y,
+									posicaoOrigem.getTipo() + " " + this.getAtorJogador().getNome());
+							this.getAtorJogador().modificaGrafico(origX, origY, p.getTipo());
+							rede.enviarJogadaBuffer(origX, origY, p.getTipo(), p.getNroPeca());
+							rede.enviarJogada(x, y, posicaoOrigem.getTipo() + " " + this.getAtorJogador().getNome(),
+									posicaoOrigem.getNroPeca());
+						}
+					}
+				}
+
+				notif = "Jogada realizada com sucesso";
+				if (minhaColmeia.abelhaCercada(corOp)) {
+					notif = "Abelha cercada. Voce ganhou o jogo.";
+					return notif;
+				}
+				if (minhaColmeia.abelhaPropriaCercada(corOp)) {
+					notif = "Abelha cercada. Voce perdeu o jogo.";
+					return notif;
+				}
+				this.rodada++;
+				this.atualizaVez();
+			}
+
+			else {
+				notif = "aguarde sua vez";
+			}
+		}
+
+		else {
+			notif = "nao conectado";
+		}
+
 		return notif;
 	}
 	

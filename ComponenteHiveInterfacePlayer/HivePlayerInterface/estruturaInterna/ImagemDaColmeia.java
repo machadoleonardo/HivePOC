@@ -12,8 +12,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ClassesComuns.Lance;
+import ClassesComuns.Peca;
 import ClassesComuns.Posicao;
+
 import br.ufsc.inf.leobr.cliente.Jogada;
+import interfaceDoComponente.PortPlayerProxyOutbox;
 
 public class ImagemDaColmeia extends JPanel implements Jogada {
 
@@ -98,37 +102,40 @@ public class ImagemDaColmeia extends JPanel implements Jogada {
 		}
 
 		public void clickMouse(int x, int y) {
-//			Lance lance = new Lance(x, y, p) 
-//			if(hiveGUI.getPlayerPort().){
-			// JOptionPane.showMessageDialog(null, "coordenadas selecionadas "+x+""+y);
-			if (bufferInt < 0 && board[x][y].isEmpty()) {
-				JOptionPane.showMessageDialog(null, "selecione uma peca nos botoes ao lado ou no tabuleiro.");
-			} else {
-				if (bufferInt >= 0 && board[x][y].isEmpty()) { // se hexagono clicado esta vazio, manda executar lance
-					hiveGUI.executarLance(x, y, origX, origY, bufferInt);
-					bufferInt = -1;
-					origX = 23;
-					origY = 23;
+			if ((hiveGUI.playerState == PlayerStateValue.playing) && (hiveGUI.ehMinhaVez == true)) {
+				if (bufferInt < 0 && board[x][y].isEmpty()) {
+					JOptionPane.showMessageDialog(null, "selecione uma peca nos botoes ao lado ou no tabuleiro.");
 				} else {
-					if (bufferInt >= 0 && !board[x][y].isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Posicao ocupada. Tente novamente.");
-					} else { // bufferInt<0 && ! board[x][y].isEmpty()
-						origX = x;
-						origY = y;
-						bufferInt = 12;
-						JOptionPane.showMessageDialog(null, "Coordenadas carregadas. Escolha posicao destino");
-					} // se hexagono clicado possui algo dentro, somente carrega coordenadas
+					if (bufferInt >= 0 && board[x][y].isEmpty()) {
+						Peca peca = new Peca();
+						peca.setNroPeca(bufferInt);
+						Lance move = new Lance(x, y, peca);
+
+						PortPlayerProxyOutbox portOutbox = (PortPlayerProxyOutbox) hiveGUI.playerPort.getOutbox();
+						portOutbox.lance(move);
+						bufferInt = -1;
+						origX = 23;
+						origY = 23;
+					} else {
+						if (bufferInt >= 0 && !board[x][y].isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Posicao ocupada. Tente novamente.");
+						} else { // bufferInt<0 && ! board[x][y].isEmpty()
+							origX = x;
+							origY = y;
+							bufferInt = 12;
+							JOptionPane.showMessageDialog(null, "Coordenadas carregadas. Escolha posicao destino");
+						}
+					}
 				}
-				// devera ser testado no controlador: se buffer=12, nao eh necessario utiliza-lo
-				// (movimentacao de peca)
-				// : se buffer>=0 e <11, nao precisa obter origX e origY.
-
+			} else {
+				if (hiveGUI.playerState != PlayerStateValue.playing) {
+					hiveGUI.comunicarMensagem("Não há jogo em andamento");
+				} else {
+					hiveGUI.comunicarMensagem("Você não está habilitado para jogar");
+				}
 			}
-
-//		} else {JOptionPane.showMessageDialog(null, "aguarde sua vez");}
 		}
-
-	} // final da classe Mouse Listener
+	}
 
 	public Graphics2D getGrafico() {
 		return this.g2;
@@ -139,11 +146,11 @@ public class ImagemDaColmeia extends JPanel implements Jogada {
 	}
 
 	public void setBufferInt(int i) {
-//		if(rede.getEhMinhaVez()){
-		this.bufferInt = i;
-		// JOptionPane.showMessageDialog(null, "Buffer carregado.");
-//	} else {JOptionPane.showMessageDialog(null, "aguarde sua vez");}}
-
+		if (hiveGUI.ehMinhaVez) {
+			this.bufferInt = i;
+		} else {
+			JOptionPane.showMessageDialog(null, "aguarde sua vez");
+		}
 	}
 
-} // final da classe ImagemDaColmeia
+}
