@@ -72,7 +72,7 @@ public class ImagemDaColmeia extends JPanel implements Jogada
 		//draw grid
 		for (int i=0;i<BSIZE;i++) {
 			for (int j=0;j<BSIZE;j++) {
-				Posicao p = new Posicao(umGerenciador);
+				Posicao p = new Posicao();
 				p.drawHex(i, j, g2);
 				
 				}
@@ -80,7 +80,7 @@ public class ImagemDaColmeia extends JPanel implements Jogada
 		//fill in hexes
 		for (int i=0;i<BSIZE;i++) {
 			for (int j=0;j<BSIZE;j++) {	
-				Posicao p = new Posicao(umGerenciador);
+				Posicao p = new Posicao();
 				p.fillHex(i, j, board[i][j], g2);}}}
 		
 		
@@ -96,7 +96,7 @@ public class ImagemDaColmeia extends JPanel implements Jogada
 	class MyMouseListener extends MouseAdapter	{	//classe interna a ImagemDaColmeia
 		public void mouseClicked(MouseEvent e) { 
 	
-			Posicao po = new Posicao(umGerenciador);
+			Posicao po = new Posicao();
 			Point p = new Point( po.pxtoHex(e.getX(),e.getY()) );
 			if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE) return;
 

@@ -15,25 +15,25 @@ public class PortManagerProxyOutbox extends StandardPortOutbox implements Interf
 
 	@Override
 	public void updateState(State state) {
-		// TODO Auto-generated method stub
+		((InterfaceProxyManager) externalPort).updateState(state);
 		
 	}
 
 	@Override
 	public void comunicar(CommunicationContainer notification) {
-		// TODO Auto-generated method stub
+		((InterfaceProxyManager) externalPort).comunicar(notification);
 		
 	}
 
 	@Override
 	public void selfDestruct() {
-		// TODO Auto-generated method stub
+		((InterfaceProxyManager) externalPort).selfDestruct();
 		
 	}
 
 	@Override
 	public void enviarMensagem(String mensagem) {
-		// TODO Auto-generated method stub
+		((InterfaceProxyManager) externalPort).enviarMensagem(mensagem);
 		
 	}
 

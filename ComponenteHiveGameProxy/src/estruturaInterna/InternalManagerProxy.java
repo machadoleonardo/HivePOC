@@ -1,6 +1,7 @@
 package estruturaInterna;
 
 
+
 import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
 import ClassesComuns.Jogador;

@@ -59,23 +59,23 @@ public class ManagerGUI extends JFrame {
 		textField = new JTextField();
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Start server");
+		JButton btnNewButton = new JButton("Inicar servidor");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*boolean result =*/ /*manager*/ this.startServer();
+				this.iniciarServidor();
 			}
 
-			private void startServer() {
-				boolean result = manager.iniciaarServidor();
+			private void iniciarServidor() {
+				boolean result = manager.iniciarServidor();
 				if (result) {
-					textField.setText("Tic Tac Toe Server connected");
+					textField.setText("Servidor Hive conectado");
 				} else {
-					textField.setText("Connection error. Try again later");
+					textField.setText("Erro de conexão. Tente mais tarde");
 				}				
 			}
 		});
 		
-		JLabel lblTicTacToe = new JLabel("Tic Tac Toe Server status:");
+		JLabel lblTicTacToe = new JLabel("Status do servidor Hive:");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
