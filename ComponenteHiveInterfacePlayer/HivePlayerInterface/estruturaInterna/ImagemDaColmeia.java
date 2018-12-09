@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ClassesComuns.Lance;
 import ClassesComuns.Posicao;
 import br.ufsc.inf.leobr.cliente.Jogada;
 

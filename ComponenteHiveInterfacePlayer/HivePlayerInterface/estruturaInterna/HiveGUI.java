@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -71,6 +72,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 	}
 
 	protected PlayerStateValue playerState = PlayerStateValue.disconnected;
+	private boolean enabledAction = false;
 
 	public HiveGUI() throws HeadlessException {
 		super();
@@ -224,8 +226,47 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 
 	@Override
 	public void updateState(State state) {
-		// TODO Auto-generated method stub
-
+		int value = 0;
+		Icon vazia = new ImageIcon(ClassLoader.getSystemResource("vazia.gif"));
+		Icon xis = new ImageIcon(ClassLoader.getSystemResource("xis.gif"));
+		Icon bola = new ImageIcon(ClassLoader.getSystemResource("bola.gif"));
+		String stateMessage = state.getStateMessage();
+		// STATE UPDATE
+		if (playerState == PlayerStateValue.connected) {
+			playerState = PlayerStateValue.playing;
+			if (stateMessage.contains(nome)) {
+				enabledAction  = true;
+			} else {
+				enabledAction = false;
+			}
+		}
+		if ((playerState == PlayerStateValue.playing) &&
+			((stateMessage.contains("gave up")) || (stateMessage.contains("Game ended")) || (stateMessage.contains("Winner:"))))	{
+			playerState = PlayerStateValue.connected;
+			enabledAction = false;
+		} else {
+			if (stateMessage.contains(nome)) {
+				enabledAction = true;
+			} else {
+				enabledAction = false;
+			}
+		}
+		// INTERFACE UPDATE
+		for (int linha = 1; linha < 4; linha++) {
+			for (int coluna = 1; coluna < 4; coluna++) {				
+				value = state.getValue(linha, coluna);
+				switch (value) {
+				case 0:
+//					mapVPosition[(linha - 1)][(coluna - 1)].setIcon(vazia);
+					break;
+				case 1:
+//					mapVPosition[(linha - 1)][(coluna - 1)].setIcon(xis);
+					break;
+				case 2:
+//					mapVPosition[(linha - 1)][(coluna - 1)].setIcon(bola);
+				}
+			}
+		}
 	}
 
 	@Override

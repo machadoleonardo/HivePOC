@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="netgames"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ClassesCompartilhadas"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ComponenteInterfacePadrao"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ComponenteHiveGameManager"/>
