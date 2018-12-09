@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import ClassesComuns.Colmeia;
 import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
+import ClassesComuns.Jogador;
 import ClassesComuns.Peca;
 import ClassesComuns.State;
 import InterfacesComuns.InterfacePlayerProxy;
@@ -232,13 +233,13 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		if (playerState == PlayerStateValue.connected) {
 			playerState = PlayerStateValue.playing;
 			if (stateMessage.contains(nome)) {
-				ehMinhaVez  = true;
+				ehMinhaVez = true;
 			} else {
 				ehMinhaVez = false;
 			}
 		}
-		if ((playerState == PlayerStateValue.playing) &&
-			((stateMessage.contains("gave up")) || (stateMessage.contains("Game ended")) || (stateMessage.contains("Winner:"))))	{
+		if ((playerState == PlayerStateValue.playing) && ((stateMessage.contains("gave up"))
+				|| (stateMessage.contains("Game ended")) || (stateMessage.contains("Winner:")))) {
 			playerState = PlayerStateValue.connected;
 			ehMinhaVez = false;
 		} else {
@@ -250,7 +251,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		}
 		// INTERFACE UPDATE
 		for (int linha = 1; linha < 4; linha++) {
-			for (int coluna = 1; coluna < 4; coluna++) {				
+			for (int coluna = 1; coluna < 4; coluna++) {
 				value = state.getValue(linha, coluna);
 				switch (value) {
 				case 0:
@@ -279,23 +280,23 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		String title = "";
 		switch (kind) {
 		case connectionNotification:
-			title = "Connection notification: ";
-			if (content.equals("Server not connected")) {
+			title = "Notificação de conexão: ";
+			if (content.equals("Servidor desconectado")) {
 				playerState = PlayerStateValue.disconnected;
 			}
-			if (content.equals("Connected to TTT Server")) {
+			if (content.equals("Conectado ao Servidor Hive")) {
 				playerState = PlayerStateValue.connected;
 			}
 			break;
 		case disconnectionNotification:
-			title = "Disconnection notification: ";
+			title = "Notificação de desconecção: ";
 			playerState = PlayerStateValue.disconnected;
 			break;
 		case irregularMoveNotification:
-			title = "Irregular move notification: ";
+			title = "Movimento irregular: ";
 			break;
 		case connectedPlayerNotification:
-			title = "Connected players: ";
+			title = "Jogadores conectados: ";
 			break;
 		default:
 			break;
@@ -396,30 +397,41 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		} else if (textoBotao.equals("inserir besouro 2")) {
 			panel.setBufferInt(10);
 		}
-		
+
 	}
-	
+
 	private void finalizarPartida() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void iniciarPartida() {
-		// TODO Auto-generated method stub
-		
+		if (partidaEmAndamento) {
+			JOptionPane.showMessageDialog(null, "Ja existe partida em andamento");
+		} else {
+			if (playerState != PlayerStateValue.connected) {
+				JOptionPane.showMessageDialog(null, "Voce nao esta conectado.");
+			} else {
+				PortPlayerProxyOutbox portOutbox = (PortPlayerProxyOutbox) playerPort.getOutbox();
+				Jogador jogador = new Jogador(1);
+				jogador.setApelido(nome);
+				portOutbox.iniciar(jogador);
+			}
+		}
+
 	}
 
 	private void desconectar() {
 		if (playerState != PlayerStateValue.disconnected) {
 			PortPlayerProxyOutbox portOutbox = (PortPlayerProxyOutbox) playerPort.getOutbox();
 			if (playerState == PlayerStateValue.playing) {
-				portOutbox.desistir(nome);				
+				portOutbox.desistir(nome);
 			}
-			portOutbox.conectar(nome);
+			portOutbox.desconectar(nome);
 		} else {
-			this.comunicarMensagem(	"Você já está desconectado");
+			this.comunicarMensagem("Você já está desconectado");
 		}
-		
+
 	}
 
 	private void conectar() {
@@ -430,20 +442,19 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 				Random randomGenerator = new Random();
 				randomInt = randomGenerator.nextInt(100000);
 				nome = "jogador" + Integer.toString(randomInt);
-			}			
+			}
 			portOutbox.conectar(nome);
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-				portOutbox.confirmarConexao();
+			portOutbox.confirmarConexao();
+			
 		} else {
-			this.comunicarMensagem("Voce esta conectado");
+			this.comunicarMensagem("Voce já esta conectado");
 		}
-		
-	}
 
-	
+	}
 
 }

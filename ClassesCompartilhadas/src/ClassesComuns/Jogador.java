@@ -1,8 +1,9 @@
 package ClassesComuns;
 
 import InterfacesComuns.Throw;
+import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class Jogador implements Throw {
+public class Jogador implements Throw, Jogada {
 
 /**
 	 * 

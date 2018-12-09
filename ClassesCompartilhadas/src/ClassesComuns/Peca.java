@@ -1,6 +1,8 @@
 package ClassesComuns;
 
-public class Peca {
+import br.ufsc.inf.leobr.cliente.Jogada;
+
+public class Peca implements Jogada {
 	protected int passosMaximo;
 	protected boolean pecaAcima;
 	protected boolean cercada;

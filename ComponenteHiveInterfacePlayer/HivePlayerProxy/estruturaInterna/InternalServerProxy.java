@@ -33,7 +33,7 @@ public class InternalServerProxy implements InterfaceProxyPlayer {
 			serverOutbox.disconnect();		//		disconnectNG()
 			CommunicationContainer result = new CommunicationContainer();
 			result.setKind(CommunicationKind.connectionNotification);
-			result.setContent("Server not connected");
+			result.setContent("Servidor desconectado");
 			playerOutbox.comunicar(result);
 		}		
 	}

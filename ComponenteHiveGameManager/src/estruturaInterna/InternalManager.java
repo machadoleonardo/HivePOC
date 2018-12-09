@@ -15,6 +15,7 @@ import interfaceDoComponente.PortLogicOutbox;
 import interfaceDoComponente.PortManager2;
 import interfaceDoComponente.PortManagerProxy;
 import interfaceDoComponente.PortManagerProxyOutbox;
+import jdk.nashorn.internal.scripts.JO;
 
 public class InternalManager {
 
@@ -29,6 +30,7 @@ public class InternalManager {
 		PortManagerProxy proxy1 = this.getProxyPort(portId);
 		Jogador player2;
 		Jogador player1 = proxy1.getPlayer();
+		boolean jogoIniciara = false;
 		availablePlayers.remove(player1);
 		unavailablePlayers.add(player1);
 		String argName = player.getApelido();
@@ -36,49 +38,70 @@ public class InternalManager {
 		if (argName.equals(player1Name)) {
 			player2 = this.getAnyAvailablePlayer();
 			if (player2 == null) {
-				// lançar mensagem que nao ha jogadores disponiveis
+				CommunicationContainer notification = new CommunicationContainer();
+				notification.setKind(CommunicationKind.connectionNotification);
+				notification.setContent("Não há jogadores disponíveis para jogar");
+				PortManagerProxy firstProxy = this.getProxyPort(portId);
+				firstProxy.setPlayer(player);
+				PortManagerProxyOutbox firstOutbox = (PortManagerProxyOutbox) firstProxy.getOutbox();
+				firstOutbox.comunicar(notification);
+				availablePlayers.add(player1);
+				unavailablePlayers.remove(player1);
 			} else {
 				availablePlayers.remove(player2);
 				unavailablePlayers.add(player2);
+				jogoIniciara = true;
 			}
 		} else {
 			player2 = this.getAvailablePlayer(argName);
 			if (player2 == null)
 				player2 = this.getAnyAvailablePlayer();
 			if (player2 == null) {
-				// lançar mensagem que nao ha jogadores disponiveis
+				CommunicationContainer notification = new CommunicationContainer();
+				notification.setKind(CommunicationKind.connectionNotification);
+				notification.setContent("Não há jogadores disponíveis para jogar");
+				PortManagerProxy firstProxy = this.getProxyPort(portId);
+				firstProxy.setPlayer(player);
+				PortManagerProxyOutbox firstOutbox = (PortManagerProxyOutbox) firstProxy.getOutbox();
+				firstOutbox.comunicar(notification);
+				availablePlayers.add(player1);
+				unavailablePlayers.remove(player1);
 			} else {
 				availablePlayers.remove(player2);
 				unavailablePlayers.add(player2);
+				jogoIniciara = true;
 			}
 		}
-		int player1Symbol = player.getOrdem();
-		player1.setOrdem(player1Symbol);
-		if (player1Symbol == 1) {
-			player2.setOrdem(2);
-		} else {
-			player2.setOrdem(1);
-		}
-		boolean player1Starts = player.isDaVez();
-		if (player1Starts) {
-			player1.setDaVez(true);
-			player2.setDaVez(false);
-		} else {
-			player2.setDaVez(true);
-			player1.setDaVez(false);
-		}
-		PortLogicOutbox logicOutbox = (PortLogicOutbox) logicPort.getOutbox();
-		Partida game = logicOutbox.setInitialState(player1, player2);
-		game.setPlayer1(player1);
-		game.setPlayer2(player2);
-		games.add(game);
-		State state = game.getGameState();
+		if (jogoIniciara) {
+			int player1Symbol = player.getOrdem();
+			player1.setOrdem(player1Symbol);
+			if (player1Symbol == 1) {
+				player2.setOrdem(2);
+			} else {
+				player2.setOrdem(1);
+			}
+			boolean player1Starts = player.isDaVez();
+			if (player1Starts) {
+				player1.setDaVez(true);
+				player2.setDaVez(false);
+			} else {
+				player2.setDaVez(true);
+				player1.setDaVez(false);
+			}
+			PortLogicOutbox logicOutbox = (PortLogicOutbox) logicPort.getOutbox();
+			Partida game = logicOutbox.setInitialState(player1, player2);
+			game.setPlayer1(player1);
+			game.setPlayer2(player2);
+			games.add(game);
+			State state = game.getGameState();
 
-		PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
-		PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
-		outbox2.updateState(state);
-		PortManagerProxyOutbox outbox1 = (PortManagerProxyOutbox) proxy1.getOutbox();
-		outbox1.updateState(state);
+			PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
+			PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
+			outbox2.updateState(state);
+			PortManagerProxyOutbox outbox1 = (PortManagerProxyOutbox) proxy1.getOutbox();
+			outbox1.updateState(state);
+		}
+
 	}
 
 	public String getPortManagerId() {
@@ -322,6 +345,7 @@ public class InternalManager {
 	 */
 	public void setLogicPort(PortLogic port) {
 		logicPort = port;
+
 	}
 
 	public boolean iniciarServidor() {
@@ -342,7 +366,7 @@ public class InternalManager {
 		availablePlayers.add(player);
 		CommunicationContainer notification = new CommunicationContainer();
 		notification.setKind(CommunicationKind.connectionNotification);
-		notification.setContent("Conectando ao Servervidor");
+		notification.setContent("Conectado ao Servidor Hive");
 		PortManagerProxy firstProxy = this.getProxyPort(portId);
 		firstProxy.setPlayer(player);
 		PortManagerProxyOutbox firstOutbox = (PortManagerProxyOutbox) firstProxy.getOutbox();
@@ -382,7 +406,7 @@ public class InternalManager {
 		Jogador player1 = proxy1.getPlayer();
 		Partida game = this.recuperateGame(player1);
 		Jogador player2 = game.getOpponent(player1);
-	    PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
+		PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
 		PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
 		outbox2.enviarMensagem(message);
 	}
