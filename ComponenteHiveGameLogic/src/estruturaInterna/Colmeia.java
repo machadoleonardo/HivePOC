@@ -23,6 +23,7 @@ public class Colmeia {
 	protected Jogador jogador1 = null;
 	protected Jogador jogador2 = null;
 	protected boolean finalizada = false;
+	protected boolean vencedor = false;
 
 	public Colmeia() {
 
@@ -382,22 +383,58 @@ public class Colmeia {
 		if (minhaColmeia.abelhaCercada(corOp)) {
 			notif = "Abelha cercada. Voce ganhou o jogo.";
 			partida.getEstadoPartida().setEstadoMensagem(notif);
-			Estado newEstado = new Estado(minhaColmeia.tabuleiro);
+			Estado newEstado = getEstado();
 			partida.setEstadoPartida(newEstado);
 			return partida;
 		}
 		if (minhaColmeia.abelhaPropriaCercada(corOp)) {
 			partida.getEstadoPartida().setEstadoMensagem(notif);
-			Estado newEstado = new Estado(minhaColmeia.tabuleiro);
+			Estado newEstado =  getEstado();
 			partida.setEstadoPartida(newEstado);
 			return partida;
 		}
 		partida.setRodada(partida.getRodada() + 1);
 		atualizaVez(partida);
-		Estado newEstado = new Estado(minhaColmeia.tabuleiro);
+		Estado newEstado =  getEstado();
 		partida.setEstadoPartida(newEstado);
 
 		return partida;
+	}
+	
+	private Jogador getVencedor() {
+		if (jogador1.isVencedor()) {
+			return jogador1;
+		} else {
+			if (jogador2.isVencedor()) {
+				return jogador2;
+			} else {
+				return null;
+			}
+		}
+	}
+	
+	private Estado getEstado() {
+		Estado estado;
+		Jogador oVencedor = null;
+		estado = new Estado(tabuleiro);
+	// composing the message
+		if (! finalizada) {
+			if (jogador1.isDaVez()) {
+				estado.setEstadoMensagem("Jogador: " + jogador1.getApelido());
+			} else {
+				estado.setEstadoMensagem("Jogador: " + jogador2.getApelido());		
+			};			
+		} else {
+			oVencedor = this.getVencedor();
+			if (oVencedor == null) {
+				estado.setEstadoMensagem("Jogo terminado empatado");
+			} else {
+				estado.setEstadoMensagem("Vencedor: " + oVencedor.getApelido());			
+			};			
+		};
+		
+		
+		return estado;
 	}
 
 	public Partida setInitialState(Jogador jogador1, Jogador jogador2) {
@@ -435,6 +472,20 @@ public class Colmeia {
 		} else {
 			partida.getJogador1().setDaVez(true);
 			partida.getJogador2().setDaVez(false);
+		}
+	}
+	
+	private void avaliarFinalizada() {
+		if (vencedor) {
+			finalizada = true;
+		} else {
+			if(abelhaCercada(jogador1.getCor())) {
+				finalizada = true;
+				
+			}else if(abelhaCercada(jogador2.getCor())){
+				finalizada = true;
+			}
+			
 		}
 	}
 }

@@ -235,7 +235,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 			}
 		}
 		if ((playerState == PlayerStateValue.playing) && ((stateMessage.contains("gave up"))
-				|| (stateMessage.contains("Game ended")) || (stateMessage.contains("Winner:")))) {
+				|| (stateMessage.contains("Game ended")) || (stateMessage.contains("Vencedor:")))) {
 			playerState = PlayerStateValue.connected;
 			ehMinhaVez = false;
 		} else {
