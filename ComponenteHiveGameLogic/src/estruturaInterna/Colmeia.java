@@ -7,7 +7,6 @@ import ClassesComuns.Lance;
 import ClassesComuns.Partida;
 import ClassesComuns.Peca;
 import ClassesComuns.Estado;
-import CommonClasses.Player;
 
 // Game.gameCode
 // 1 - game not started
