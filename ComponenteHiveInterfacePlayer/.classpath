@@ -15,6 +15,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameLogic"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameManager"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ComponenteHiveGameProxy"/>
-	<classpathentry kind="lib" path="netgames/ngnrtFramework.jar"/>
+	<classpathentry kind="lib" path="netgames/ngnrtFramework-multiProxy-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

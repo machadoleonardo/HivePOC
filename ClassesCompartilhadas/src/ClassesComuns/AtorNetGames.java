@@ -27,7 +27,7 @@ public class AtorNetGames implements OuvidorProxy {
 	public AtorNetGames (AtorJogador interfaceGrafica) {
 		super();
 		this.interfaceGrafica = interfaceGrafica;
-		proxy = Proxy.getInstance();
+		proxy = new Proxy();
 		proxy.addOuvinte(this);
 		ehMinhaVez = false;
 		}

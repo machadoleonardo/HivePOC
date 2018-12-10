@@ -17,7 +17,7 @@ import cip.NonComponentPortOutbox;
 public class PortServerOutbox extends NonComponentPortOutbox implements InterfaceNetgamesManager {
 	
 	public void initialize() {
-		Proxy proxy = Proxy.getInstance();
+		Proxy proxy = new Proxy();
 		this.connectNonComponent(proxy);
 
 	}
