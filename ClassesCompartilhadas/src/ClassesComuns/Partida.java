@@ -91,14 +91,6 @@ public class Partida {
 		return null;
 	}
 
-	public String getNotif() {
-		return notif;
-	}
-
-	public void setNotif(String notif) {
-		this.notif = notif;
-	}
-
 	public Jogador getJogadorDaVez(String jogadorDoLance) {
 		if (jogadorDoLance.equals(jogador1.getApelido()))
 			return jogador1;
@@ -106,5 +98,7 @@ public class Partida {
 			return jogador2;
 		return null;
 	}
+
+	
 
 }
