@@ -27,7 +27,7 @@ import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
 import ClassesComuns.Jogador;
 import ClassesComuns.Peca;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfacePlayerProxy;
 import interfaceDoComponente.PortPlayerProxy;
 import interfaceDoComponente.PortPlayerProxyOutbox;
@@ -223,7 +223,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 	}
 
 	@Override
-	public void updateState(State state) {
+	public void updateState(Estado state) {
 		int value = 0;
 		Icon vazia = new ImageIcon(ClassLoader.getSystemResource("vazia.gif"));
 		Icon xis = new ImageIcon(ClassLoader.getSystemResource("xis.gif"));

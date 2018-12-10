@@ -1,7 +1,7 @@
 package interfaceDoComponente;
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfacePlayerProxy;
 import cip.StandardPortOutbox;
 import interfaceDoComponente.PortPlayerProxy;
@@ -19,7 +19,7 @@ public class PortPlayerOutbox extends StandardPortOutbox implements InterfacePla
 	}
 
 	@Override
-	public void updateState(State arg0) {
+	public void updateState(Estado arg0) {
 		((PortPlayerProxy) externalPort).updateState(arg0);
 	}
 

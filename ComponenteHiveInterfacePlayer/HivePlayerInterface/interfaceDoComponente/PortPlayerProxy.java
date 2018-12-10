@@ -1,7 +1,7 @@
 package interfaceDoComponente;
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfacePlayerProxy;
 import cip.InterfacePort;
 import estruturaInterna.HiveGUI;
@@ -34,7 +34,7 @@ public class PortPlayerProxy extends InterfacePort implements InterfacePlayerPro
 	}
 
 	@Override
-	public void updateState(State arg0) {
+	public void updateState(Estado arg0) {
 		internalReference.updateState(arg0);
 	}
 

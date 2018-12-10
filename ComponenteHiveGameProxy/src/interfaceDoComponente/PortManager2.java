@@ -1,7 +1,7 @@
 package interfaceDoComponente;
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfaceProxyManager;
 import cip.InterfacePort;
 import estruturaInterna.InternalServerProxy;
@@ -44,7 +44,7 @@ public class PortManager2 extends InterfacePort implements InterfaceProxyManager
 	}
 
 	@Override
-	public void updateState(State arg0) {
+	public void updateState(Estado arg0) {
 		internalReference.updateState(arg0);
 	}
 

@@ -6,7 +6,8 @@ import ClassesComuns.Jogador;
 import ClassesComuns.Lance;
 import ClassesComuns.Partida;
 import ClassesComuns.Peca;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
+import CommonClasses.Player;
 
 // Game.gameCode
 // 1 - game not started
@@ -20,6 +21,10 @@ public class Colmeia {
 	
 	protected Peca[][]tabuleiro;
 	final static int BSIZE = 24;
+	protected Jogador jogador1 = null;
+	protected Jogador jogador2 = null;
+	protected boolean finalizada = false;
+	protected boolean vencedor = false;
 		
 	public Colmeia() {
 		
@@ -231,14 +236,32 @@ public Partida tratarLance(Partida game, Lance lance) {
 }
 
 
-public Partida setInitialState(Jogador player1, Jogador player2) {
-	// TODO Auto-generated method stub
-	return null;
+public Partida setInitialState(Jogador jogador1, Jogador jogador2) {
+	this.jogador1 = jogador1;
+	this.jogador2 = jogador2;
+	Partida partida = new Partida(); // gameCode = 1
+	partida.setJogador1(jogador1);
+	partida.setJogador2(jogador2);
+	Estado state = new Estado();
+	Jogador player = this.getJogadorDaVez();
+	String name = player.getApelido();
+	String message = "Player - " + name;
+	state.setEstadoMensagem(message);
+	partida.setEstadoPartida(state);		
+	return partida;
 }
 
 
 public Partida terminarRetirda(Partida game, Jogador player) {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+private Jogador getJogadorDaVez() {
+	if (jogador1.isDaVez()) {
+		return jogador1;
+	} else {
+		return jogador2;
+	}		
 }
 }

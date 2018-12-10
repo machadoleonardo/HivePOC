@@ -1,11 +1,11 @@
 package InterfacesComuns;
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 
 public interface InterfacePlayerProxy {
 	
-	public void updateState(State state);
+	public void updateState(Estado state);
 	
 	public void receberMensagem(String message);
 	

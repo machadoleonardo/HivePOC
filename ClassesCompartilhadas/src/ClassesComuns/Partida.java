@@ -2,64 +2,64 @@ package ClassesComuns;
 
 public class Partida {
 	
-	protected int gameId = 0;
-	protected State gameState;
-	protected int gameCode = 1;
+	protected int idPartida = 0;
+	protected Estado estadoPartida;
+	protected int codPartida = 1;
 	protected Jogador jogador1;
-	protected Jogador Jogador2;
+	protected Jogador jogador2;
 	
-	// gameCode
-	// 1 - game not started
-	// 2 - game finished with quitting
-	// 3 - irregular move (game in progress)
-	// 4 - next player (game in progress)
-	// 5 - game with winner
-	// 6 - game tied
+	// codPartida
+	// 1 - jogo não iniciado
+	// 2 - jogo terminado com desistir
+	// 3 - movimento irregular (jogo em andamento)
+	// 4 - próximo jogador (jogo em andamento)
+	// 5 - jogo com vencedor
+	// 6 - jogo empatado
 	
-	public void setGameId (int arg) {
-		gameId = arg;
+	public void setIdPartida (int arg) {
+		idPartida = arg;
 	}
 	
-	public int getGameId () {
-		return(gameId);
+	public int getIdPartida () {
+		return(idPartida);
 	}
 	
-	public void setGameState (State arg) {
-		gameState = arg;
+	public void setEstadoPartida (Estado arg) {
+		estadoPartida = arg;
 	}
 	
-	public State getGameState () {
-		return(gameState);
+	public Estado getEstadoPartida () {
+		return(estadoPartida);
 	}
 	
-	public void setGameCode (int arg) {
-		gameCode = arg;
+	public void setCodPartida (int arg) {
+		codPartida = arg;
 	}
 	
-	public int getGameCode () {
-		return(gameCode);
+	public int getCodPartida () {
+		return(codPartida);
 	}
 
 
-	public void setPlayer1 (Jogador arg) {
+	public void setJogador1 (Jogador arg) {
 		jogador1 = arg;
 	}
 	
-	public Jogador getPlayer1 () {
+	public Jogador getJogador1 () {
 		return(jogador1);
 	}
 
-	public void setPlayer2 (Jogador arg) {
-		Jogador2 = arg;
+	public void setJogador2 (Jogador arg) {
+		jogador2 = arg;
 	}
 	
-	public Jogador getPlayer2 () {
-		return(Jogador2);
+	public Jogador getJogador2 () {
+		return(jogador2);
 	}
 
-	public Jogador getOpponent (Jogador arg) {
-		if (arg == jogador1) return Jogador2;
-		if (arg == Jogador2) return jogador1;
+	public Jogador getOponente (Jogador arg) {
+		if (arg == jogador1) return jogador2;
+		if (arg == jogador2) return jogador1;
 		return null;
 	}
 

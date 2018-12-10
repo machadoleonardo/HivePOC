@@ -2,7 +2,7 @@ package estruturaInterna;
 
 import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfaceProxyServer;
 import InterfacesComuns.Throw;
 import interfaceDoComponente.PortPlayer;
@@ -27,8 +27,8 @@ public class InternalPlayerProxy implements InterfaceProxyServer {
 	public void receber(Throw arg0) {
 		PortPlayerOutbox playerOutbox = (PortPlayerOutbox) portPlayer.getOutbox();
 		PortServerOutbox serverOutbox = (PortServerOutbox) portServer.getOutbox();
-		if (arg0 instanceof State) {
-			playerOutbox.updateState((State) arg0);
+		if (arg0 instanceof Estado) {
+			playerOutbox.updateState((Estado) arg0);
 		} else {
 			CommunicationKind kind = ((CommunicationContainer) arg0).getKind();
 			if (kind == CommunicationKind.disconnectionNotification) {

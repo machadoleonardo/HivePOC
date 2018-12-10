@@ -1,7 +1,7 @@
 package InterfacesComuns;
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 
 public interface InterfaceProxyManager {
 
@@ -10,7 +10,7 @@ public interface InterfaceProxyManager {
 
 	boolean conectar(String n);
 
-	public void updateState(State state);
+	public void updateState(Estado state);
 	
 	public void comunicar(CommunicationContainer notification);
 	

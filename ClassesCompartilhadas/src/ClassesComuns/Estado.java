@@ -3,7 +3,7 @@ package ClassesComuns;
 import InterfacesComuns.Throw;
 import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class State implements Throw, Jogada {
+public class Estado implements Throw, Jogada {
 	
 	/**
 	 * 
@@ -16,7 +16,7 @@ public class State implements Throw, Jogada {
 		return stateMessage;
 	}
 	
-	public void setStateMessage(String text) {
+	public void setEstadoMensagem(String text) {
 		stateMessage = text;
 	}
 	 

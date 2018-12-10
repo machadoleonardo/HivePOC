@@ -1,7 +1,7 @@
 package estruturaInterna;
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfaceProxyManager;
 import interfaceDoComponente.PortServer;
 import interfaceDoComponente.PortServerOutbox;
@@ -39,7 +39,7 @@ public class InternalServerProxy implements InterfaceProxyManager {
 	}
 
 	@Override
-	public void updateState(State arg0) {
+	public void updateState(Estado arg0) {
 		PortServerOutbox outbox = (PortServerOutbox) portServer.getOutbox();
 		outbox.enviar(arg0);
 	}

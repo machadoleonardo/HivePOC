@@ -2,7 +2,7 @@ package interfaceDoComponente;
 
 
 import ClassesComuns.CommunicationContainer;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import InterfacesComuns.InterfaceProxyManager;
 import cip.StandardPortOutbox;
 
@@ -14,7 +14,7 @@ public class PortManagerProxyOutbox extends StandardPortOutbox implements Interf
 	}
 
 	@Override
-	public void updateState(State state) {
+	public void updateState(Estado state) {
 		((InterfaceProxyManager) externalPort).updateState(state);
 		
 	}

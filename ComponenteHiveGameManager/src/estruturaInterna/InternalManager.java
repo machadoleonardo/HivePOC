@@ -7,7 +7,7 @@ import ClassesComuns.CommunicationKind;
 import ClassesComuns.Jogador;
 import ClassesComuns.Lance;
 import ClassesComuns.Partida;
-import ClassesComuns.State;
+import ClassesComuns.Estado;
 import cip.InterfacePort;
 import interfaceDoComponente.HiveManagerProxy;
 import interfaceDoComponente.PortLogic;
@@ -73,27 +73,27 @@ public class InternalManager {
 			}
 		}
 		if (jogoIniciara) {
-			int player1Symbol = player.getOrdem();
-			player1.setOrdem(player1Symbol);
-			if (player1Symbol == 1) {
+			 Random random = new Random();
+			 
+			boolean jogador1Inicia = random.nextBoolean();
+			if (jogador1Inicia) {
+				player1.setOrdem(1);
 				player2.setOrdem(2);
-			} else {
-				player2.setOrdem(1);
-			}
-			boolean player1Starts = player.isDaVez();
-			if (player1Starts) {
 				player1.setDaVez(true);
 				player2.setDaVez(false);
 			} else {
+				player1.setOrdem(2);
+				player2.setOrdem(1);
 				player2.setDaVez(true);
 				player1.setDaVez(false);
 			}
+		
 			PortLogicOutbox logicOutbox = (PortLogicOutbox) logicPort.getOutbox();
 			Partida game = logicOutbox.setInitialState(player1, player2);
-			game.setPlayer1(player1);
-			game.setPlayer2(player2);
+			game.setJogador1(player1);
+			game.setJogador2(player2);
 			games.add(game);
-			State state = game.getGameState();
+			Estado state = game.getEstadoPartida();
 
 			PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
 			PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
@@ -218,14 +218,14 @@ public class InternalManager {
 	 * @param newGame
 	 */
 	private void updateGame(Partida game, Partida newGame) {
-		game.setGameState(newGame.getGameState());
-		game.setGameCode(newGame.getGameCode());
-		Jogador player1 = game.getPlayer1();
-		Jogador player2 = game.getPlayer2();
-		player1.setOrdem(newGame.getPlayer1().getOrdem());
-		player2.setOrdem(newGame.getPlayer2().getOrdem());
-		player1.setVencedor(newGame.getPlayer1().isVencedor());
-		player2.setVencedor(newGame.getPlayer2().isVencedor());
+		game.setEstadoPartida(newGame.getEstadoPartida());
+		game.setCodPartida(newGame.getCodPartida());
+		Jogador player1 = game.getJogador1();
+		Jogador player2 = game.getJogador2();
+		player1.setOrdem(newGame.getJogador1().getOrdem());
+		player2.setOrdem(newGame.getJogador2().getOrdem());
+		player1.setVencedor(newGame.getJogador1().isVencedor());
+		player2.setVencedor(newGame.getJogador2().isVencedor());
 	}
 
 	/**
@@ -240,10 +240,10 @@ public class InternalManager {
 		PortManagerProxy proxy1 = this.getProxyPort(portId);
 		Jogador player1 = proxy1.getPlayer();
 		Partida game = this.recuperateGame(player1);
-		Jogador player2 = game.getOpponent(player1);
+		Jogador player2 = game.getOponente(player1);
 		PortLogicOutbox logicOutbox = (PortLogicOutbox) logicPort.getOutbox();
 		Partida newGame = logicOutbox.tratarLance(game, lance);
-		int returnedCode = newGame.getGameCode();
+		int returnedCode = newGame.getCodPartida();
 		if (returnedCode == 3) {
 			CommunicationContainer result = new CommunicationContainer();
 			result.setKind(CommunicationKind.connectedPlayerNotification);
@@ -251,7 +251,7 @@ public class InternalManager {
 			((PortManagerProxyOutbox) proxy1.getOutbox()).comunicar(result);
 		} else {
 			this.updateGame(game, newGame);
-			State state = game.getGameState();
+			Estado state = game.getEstadoPartida();
 			((PortManagerProxyOutbox) proxy1.getOutbox()).updateState(state);
 			PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
 			PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
@@ -270,7 +270,7 @@ public class InternalManager {
 	 */
 	private Partida recuperateGame(Jogador player) {
 		for (int i = 0; i < games.size(); i++) {
-			if ((games.get(i).getPlayer1() == player) || (games.get(i).getPlayer2() == player)) {
+			if ((games.get(i).getJogador1() == player) || (games.get(i).getJogador2() == player)) {
 				return (games.get(i));
 			}
 		}
@@ -294,8 +294,8 @@ public class InternalManager {
 	 * @param game
 	 */
 	private void discardGame(Partida game) {
-		game.setPlayer1(null);
-		game.setPlayer2(null);
+		game.setJogador1(null);
+		game.setJogador2(null);
 		games.remove(game);
 	}
 
@@ -319,10 +319,10 @@ public class InternalManager {
 		PortLogicOutbox logicOutbox = (PortLogicOutbox) logicPort.getOutbox();
 		Partida newGame = logicOutbox.terminarRetirda(game, player1);
 		this.updateGame(game, newGame);
-		State state = game.getGameState();
+		Estado state = game.getEstadoPartida();
 		PortManagerProxyOutbox outbox1 = (PortManagerProxyOutbox) proxy1.getOutbox();
 		outbox1.updateState(state);
-		Jogador player2 = game.getOpponent(player1);
+		Jogador player2 = game.getOponente(player1);
 		PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
 		PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
 		outbox2.updateState(state);
@@ -405,7 +405,7 @@ public class InternalManager {
 		PortManagerProxy proxy1 = this.getProxyPort(portId);
 		Jogador player1 = proxy1.getPlayer();
 		Partida game = this.recuperateGame(player1);
-		Jogador player2 = game.getOpponent(player1);
+		Jogador player2 = game.getOponente(player1);
 		PortManagerProxy proxy2 = (PortManagerProxy) this.recuperatePlayerPort(player2);
 		PortManagerProxyOutbox outbox2 = (PortManagerProxyOutbox) proxy2.getOutbox();
 		outbox2.enviarMensagem(message);
