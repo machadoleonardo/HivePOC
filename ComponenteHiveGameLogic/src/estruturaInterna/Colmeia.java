@@ -280,7 +280,6 @@ public class Colmeia {
 		boolean temPecaVizinhaOutroTime = minhaColmeia.temPecaVizinhaOutroTime(x, y, corOp);
 		int nroPecaDestino = posicaoDestino.getNroPeca();
 
-		Partida newPartida = new Partida();
 		if (rodadaAtual == 0) { // primeira rodada de cada jogador
 			if (nroPeca == 12) {
 				notif = "Voce nao pode selecionar peca do adversario";
@@ -407,7 +406,7 @@ public class Colmeia {
 		Partida partida = new Partida(); // gameCode = 1
 		partida.setJogador1(jogador1);
 		partida.setJogador2(jogador2);
-		Estado state = new Estado();
+		Estado state = new Estado(tabuleiro);
 		Jogador player = this.getJogadorDaVez();
 		String name = player.getApelido();
 		String message = "Player - " + name;

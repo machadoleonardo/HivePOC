@@ -24,9 +24,8 @@ import javax.swing.JPanel;
 
 import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
-import ClassesComuns.Jogador;
-import ClassesComuns.Peca;
 import ClassesComuns.Estado;
+import ClassesComuns.Jogador;
 import InterfacesComuns.InterfacePlayerProxy;
 import interfaceDoComponente.PortPlayerProxy;
 import interfaceDoComponente.PortPlayerProxyOutbox;
@@ -224,9 +223,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 	@Override
 	public void updateState(Estado estado) {
 		int value = 0;
-		Icon vazia = new ImageIcon(ClassLoader.getSystemResource("vazia.gif"));
-		Icon xis = new ImageIcon(ClassLoader.getSystemResource("xis.gif"));
-		Icon bola = new ImageIcon(ClassLoader.getSystemResource("bola.gif"));
+		
 		String stateMessage = estado.getMensagemEstado();
 		// STATE UPDATE
 		if (playerState == PlayerStateValue.connected) {
@@ -405,7 +402,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 	}
 
 	private void iniciarPartida() {
-		if (partidaEmAndamento) {
+		if (playerState == PlayerStateValue.playing) {
 			JOptionPane.showMessageDialog(null, "Ja existe partida em andamento");
 		} else {
 			if (playerState != PlayerStateValue.connected) {
