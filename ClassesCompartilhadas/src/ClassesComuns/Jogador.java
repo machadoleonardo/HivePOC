@@ -16,7 +16,6 @@ protected boolean vencedor;
 protected Peca[] pecas;
 int ordem;
 protected int bufferInt;
-protected Gerenciador umGerenciador;
 protected boolean[] pecasEmJogo;
 boolean abelha;
 boolean formiga1;

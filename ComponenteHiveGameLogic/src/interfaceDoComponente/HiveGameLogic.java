@@ -1,7 +1,7 @@
 package interfaceDoComponente;
 
-import ClassesComuns.Colmeia;
 import cip.ComponentInterface;
+import estruturaInterna.Colmeia;
 
 public class HiveGameLogic extends ComponentInterface {
 	

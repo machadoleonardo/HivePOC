@@ -22,7 +22,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ClassesComuns.Colmeia;
 import ClassesComuns.CommunicationContainer;
 import ClassesComuns.CommunicationKind;
 import ClassesComuns.Jogador;
@@ -223,12 +222,12 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 	}
 
 	@Override
-	public void updateState(Estado state) {
+	public void updateState(Estado estado) {
 		int value = 0;
 		Icon vazia = new ImageIcon(ClassLoader.getSystemResource("vazia.gif"));
 		Icon xis = new ImageIcon(ClassLoader.getSystemResource("xis.gif"));
 		Icon bola = new ImageIcon(ClassLoader.getSystemResource("bola.gif"));
-		String stateMessage = state.getStateMessage();
+		String stateMessage = estado.getMensagemEstado();
 		// STATE UPDATE
 		if (playerState == PlayerStateValue.connected) {
 			playerState = PlayerStateValue.playing;
@@ -252,7 +251,7 @@ public class HiveGUI extends JFrame implements InterfacePlayerProxy, ActionListe
 		// INTERFACE UPDATE
 		for (int linha = 1; linha < 4; linha++) {
 			for (int coluna = 1; coluna < 4; coluna++) {
-				value = state.getValue(linha, coluna);
+//				value = stestadotValue(linha, coluna);
 				switch (value) {
 				case 0:
 //					mapVPosition[(linha - 1)][(coluna - 1)].setIcon(vazia);

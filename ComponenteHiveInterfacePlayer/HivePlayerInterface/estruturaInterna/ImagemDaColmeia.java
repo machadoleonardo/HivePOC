@@ -109,7 +109,7 @@ public class ImagemDaColmeia extends JPanel implements Jogada {
 					if (bufferInt >= 0 && board[x][y].isEmpty()) {
 						Peca peca = new Peca();
 						peca.setNroPeca(bufferInt);
-						Lance move = new Lance(x, y, peca);
+						Lance move = new Lance(x, y, peca, hiveGUI.nome);
 
 						PortPlayerProxyOutbox portOutbox = (PortPlayerProxyOutbox) hiveGUI.playerPort.getOutbox();
 						portOutbox.lance(move);

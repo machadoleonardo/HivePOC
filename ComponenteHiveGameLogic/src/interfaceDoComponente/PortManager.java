@@ -1,11 +1,11 @@
 package interfaceDoComponente;
 
-import ClassesComuns.Colmeia;
 import ClassesComuns.Jogador;
 import ClassesComuns.Lance;
 import ClassesComuns.Partida;
 import InterfacesComuns.InterfaceLogic;
 import cip.InterfacePort;
+import estruturaInterna.Colmeia;
 
 public class PortManager extends InterfacePort implements InterfaceLogic {
 	

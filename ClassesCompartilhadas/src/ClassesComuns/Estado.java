@@ -4,74 +4,62 @@ import InterfacesComuns.Throw;
 import br.ufsc.inf.leobr.cliente.Jogada;
 
 public class Estado implements Throw, Jogada {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected String stateMessage;
-	protected int boardFilling[][] = new int [3][3];
+	protected String mensagemEstado;
+	final static int BSIZE = 24;
+	protected Peca[][] tabuleiro;
 	
-	public String getStateMessage() {
-		return stateMessage;
+	public Estado() {
+		this.tabuleiro = new Peca[BSIZE][BSIZE];
 	}
 	
+	public Estado(Peca[][] tabuleiro) {
+		this.tabuleiro = tabuleiro;
+	}
+	public String getMensagemEstado() {
+		return mensagemEstado;
+	}
+
 	public void setEstadoMensagem(String text) {
-		stateMessage = text;
+		mensagemEstado = text;
 	}
-	 
-	public int getValue(int line, int column) {
-		int ret;
-		ret = boardFilling [(line-1)][(column-1)];
+
+	public Peca getPeca(int line, int column) {
+		Peca ret;
+		ret = tabuleiro[(line - 1)][(column - 1)];
 		return (ret);
 	}
-	 	 
-	public void setValue(int line, int column, int value) {
-		boardFilling [(line-1)][(column-1)] = value;
+
+	public boolean informaSeVazio() {
+		boolean retorno = true;
+		for (int i = 0; i < BSIZE; i++) {
+			for (int j = 0; j < BSIZE; j++) {
+				Peca p = this.getPeca(i, j);
+				if (p.getNroPeca() != -1) {
+					retorno = false;
+					return retorno;
+				} else {
+					retorno = true;
+				}
+			}
+		}
+		return retorno;
 	}
-	 
-	public boolean informEmpty() {
-		boolean empty = true;
-		for (int line=1; line<4; line++){
-			for (int column=1; column<4; column++){
-				if (this.InformOccupiedPosition(line, column)) {
-					empty = false;
-				};
-			};
-		};
-		return empty;
+
+	public boolean informaSePosicaoVazia(int line, int column) {
+		return ((this.getPeca(line, column)) == null);
 	}
-	 
-	public boolean informEmptyMiddle() {
-		return (this.informEmptyPosition(2, 2));
+
+	public boolean informaSePosicaoOcupada(int line, int column) {
+		return ((this.getPeca(line, column)) != null);
 	}
-	 
-	public boolean informEmptyPosition(int line, int column) {
-		return ((this.getValue(line, column)) == 0);
-	}
-	 
-	public boolean InformOccupiedPosition(int line, int column) {
-		return ((this.getValue(line, column)) != 0);
-	}
-	 
-	public int occupiedInLine(int ord) {
-		int cont = 0;
-		for (int column=1; column<4; column++){
-			if (this.InformOccupiedPosition(ord, column)) {
-				cont++;
-			};
-		};
-		return cont;
-	}
-	 
-	public int occupiedInColumn(int ord) {
-		int cont = 0;
-		for (int line=1; line<4; line++){
-			if (this.InformOccupiedPosition(line, ord)) {
-				cont++;
-			};
-		};
-		return cont;
+
+	public Peca[][] getTabuleiro() {
+		return tabuleiro;
 	}
 
 }
